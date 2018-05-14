@@ -25,23 +25,23 @@ class App extends Component {
 	}
 
 	render() {
-		const filteredRobots = this.state.robots.filter(robot => {
-			const search = new RegExp(this.state.searchfield.toLowerCase(), "g");
+		const { robots, searchfield } = this.state;
+		const filteredRobots = robots.filter(robot => {
+			const search = new RegExp(searchfield.toLowerCase(), "g");
 			return search.test(robot.name.toLowerCase());
 		});
-		if (this.state.robots.length === 0) {
-			return <h1 className="tc">Loading</h1>
-		} else {
-			return (
-				<div className="tc">
-					<h1 className="f2">RoboFriends</h1>
-					<SearchBox searchChange={this.onSearchChange}/>
-					<Scroll>
-						<Cardlist robots={filteredRobots}/>
-					</Scroll>
-				</div>
-			);
-		}
+		return !robots.length ?
+		<h1 className="tc">Loading</h1> :
+		(
+			<div className="tc">
+				<h1 className="f2">RoboFriends</h1>
+				<SearchBox searchChange={this.onSearchChange}/>
+				<Scroll>
+					<Cardlist robots={filteredRobots}/>
+				</Scroll>
+			</div>
+		);
+		
 	}
 }
 
